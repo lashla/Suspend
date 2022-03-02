@@ -18,13 +18,19 @@ open class MyViewModel: ViewModel() {
         }
         return result
     }
-    suspend fun result(number1: Int, number2: Int) {
 
-        val factorialOne = viewModelScope.async { factorialCalc(number1) }.await()
-        val factorialTwo = viewModelScope.async { factorialCalc(number2) }.await()
+    fun calculationHandler(number1: Int, number2: Int){
+        viewModelScope.launch {
+            delay(1000)
+            inputData.value = calcResult(number1, number2)
+        }
+    }
 
-        inputData.value =  factorialOne + factorialTwo
-}
+    suspend fun calcResult(number1: Int, number2: Int) = withContext(Dispatchers.Default) {
+            val factorialOne = viewModelScope.async { factorialCalc(number1) }.await()
+            val factorialTwo = viewModelScope.async { factorialCalc(number2) }.await()
+            return@withContext factorialOne + factorialTwo
+    }
 
 
 }
