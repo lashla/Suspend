@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 
 open class MyViewModel: ViewModel() {
-
+    var isCalculatiionFinished = false
     val inputData: MutableLiveData<Int> by lazy{
         MutableLiveData<Int>()
     }
@@ -27,9 +27,10 @@ open class MyViewModel: ViewModel() {
     }
 
     suspend fun calcResult(number1: Int, number2: Int) = withContext(Dispatchers.Default) {
-            val factorialOne = viewModelScope.async { factorialCalc(number1) }.await()
-            val factorialTwo = viewModelScope.async { factorialCalc(number2) }.await()
-            return@withContext factorialOne + factorialTwo
+        val factorialOne = viewModelScope.async { factorialCalc(number1) }.await()
+        val factorialTwo = viewModelScope.async { factorialCalc(number2) }.await()
+        isCalculatiionFinished = true
+        return@withContext factorialOne + factorialTwo
     }
 
 

@@ -1,13 +1,13 @@
 package com.example.suspend
 
-import androidx.lifecycle.viewModelScope
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MyViewModel
@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MyViewModel::class.java]
         calculateInput()
     }
+
 
 
     private fun calculateInput() {
@@ -30,17 +31,19 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "One of inputs is invalid", Toast.LENGTH_LONG).show()
             } else {
                 calculationHandler(inputNumberOne,inputNumberTwo)
+                progressBar.visibility = View.VISIBLE
+                textView.visibility = View.INVISIBLE
             }
         }
     }
     private fun calculationHandler(inputNumberOne: Int, inputNumberTwo: Int) {
         textView.text = ""
-        progressBar.visibility = View.VISIBLE
-        viewModel.calculationHandler(inputNumberOne, inputNumberTwo)
-        viewModel.inputData.observe(this){
-            textView.text = it.toString()
-            progressBar.visibility = View.INVISIBLE
-            textView.visibility = View.VISIBLE
+        viewModel.calculationHandler(inputNumberOne, inputNumberTwo).let {
+            viewModel.inputData.observe(this){
+                textView.text = it.toString()
+                progressBar.visibility = View.INVISIBLE
+                textView.visibility = View.VISIBLE
+            }
         }
         textView.text = viewModel.inputData.toString()
     }
