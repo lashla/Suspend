@@ -4,17 +4,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
+import java.math.BigInteger
 
 open class MyViewModel: ViewModel() {
-    var isCalculatiionFinished = false
-    val inputData: MutableLiveData<Int> by lazy{
-        MutableLiveData<Int>()
+    private var isCalculationFinished = false
+    val inputData: MutableLiveData<BigInteger> by lazy{
+        MutableLiveData<BigInteger>()
     }
 
-    private fun factorialCalc(number: Int): Int{
-        var result = 1
+    private fun factorialCalc(number: Int): BigInteger{
+        var result: BigInteger = BigInteger.ONE
         for (i in 1..number) {
-            result *= i
+            result *= i.toBigInteger()
         }
         return result
     }
@@ -26,10 +27,10 @@ open class MyViewModel: ViewModel() {
         }
     }
 
-    suspend fun calcResult(number1: Int, number2: Int) = withContext(Dispatchers.Default) {
+    private suspend fun calcResult(number1: Int, number2: Int) = withContext(Dispatchers.Default) {
         val factorialOne = viewModelScope.async { factorialCalc(number1) }.await()
         val factorialTwo = viewModelScope.async { factorialCalc(number2) }.await()
-        isCalculatiionFinished = true
+        isCalculationFinished = true
         return@withContext factorialOne + factorialTwo
     }
 
