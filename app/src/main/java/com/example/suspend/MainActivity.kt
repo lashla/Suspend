@@ -15,12 +15,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MyViewModel::class.java]
-        onButtonClicked()
+        setupCalculateButtonListener()
     }
 
 
 
-    private fun onButtonClicked() {
+    private fun setupCalculateButtonListener() {
         button.setOnClickListener{
             val inputNumberOne = (editTextNumber.text.toString()).toInt()
             val inputNumberTwo = (editTextNumber2.text.toString()).toInt()
