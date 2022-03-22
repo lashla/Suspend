@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel(){
-        viewModel.inputData.observe(this){
+        viewModel.resultData.observe(this){
             textView.text = it.toString()
             progressBar.visibility = View.INVISIBLE
             textView.visibility = View.VISIBLE
