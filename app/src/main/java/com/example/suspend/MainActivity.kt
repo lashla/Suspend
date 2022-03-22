@@ -22,23 +22,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupCalculateButtonListener() {
         button.setOnClickListener{
-            val inputNumberOne = (editTextNumber.text.toString()).toInt()
-            val inputNumberTwo = (editTextNumber2.text.toString()).toInt()
-            if (editTextNumber.text.isNullOrEmpty()
-                && editTextNumber2.text.isNullOrEmpty()
-                && !validator.isNumberValid(inputNumberOne)
-                && !validator.isNumberValid(inputNumberTwo)){
-                Toast.makeText(this, "One of inputs is invalid", Toast.LENGTH_LONG).show()
-            } else {
-                invokeCalculations(inputNumberOne,inputNumberTwo)
-                progressBar.visibility = View.VISIBLE
-                textView.visibility = View.INVISIBLE
-                initViewModel()
-            }
+            onCalculateButtonClicked()
         }
+        initViewModel()
     }
     private fun invokeCalculations(inputNumberOne: Int, inputNumberTwo: Int) {
         viewModel.startFactorialCalculation(inputNumberOne, inputNumberTwo)
+    }
+    private fun onCalculateButtonClicked() {
+        val inputNumberOne = (editTextNumber.text.toString()).toInt()
+        val inputNumberTwo = (editTextNumber2.text.toString()).toInt()
+        if (editTextNumber.text.isNullOrEmpty()
+            && editTextNumber2.text.isNullOrEmpty()
+            && !validator.isNumberValid(inputNumberOne)
+            && !validator.isNumberValid(inputNumberTwo)){
+            Toast.makeText(this, "One of inputs is invalid", Toast.LENGTH_LONG).show()
+        } else {
+            invokeCalculations(inputNumberOne,inputNumberTwo)
+            progressBar.visibility = View.VISIBLE
+            textView.visibility = View.INVISIBLE
+        }
     }
 
     private fun initViewModel(){
