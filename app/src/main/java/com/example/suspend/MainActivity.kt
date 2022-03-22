@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MyViewModel::class.java]
         setupCalculateButtonListener()
+        initViewModel()
     }
 
 
@@ -24,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener{
             onCalculateButtonClicked()
         }
-        initViewModel()
     }
 
     private fun invokeCalculations(inputNumberOne: Int, inputNumberTwo: Int) {
