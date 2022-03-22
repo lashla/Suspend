@@ -12,7 +12,7 @@ open class MyViewModel: ViewModel() {
         MutableLiveData<BigInteger>()
     }
 
-    private fun factorialCalc(number: Int): BigInteger{
+    private fun calculateFactorial(number: Int): BigInteger{
         var result: BigInteger = BigInteger.ONE
         for (i in 1..number) {
             result *= i.toBigInteger()
@@ -20,16 +20,16 @@ open class MyViewModel: ViewModel() {
         return result
     }
 
-    fun calculationHandler(number1: Int, number2: Int){
+    fun startFactorialCalculation(number1: Int, number2: Int){
         viewModelScope.launch {
             delay(1000)
-            inputData.value = calcResult(number1, number2)
+            inputData.value = calculateFactorialsSum(number1, number2)
         }
     }
 
-    private suspend fun calcResult(number1: Int, number2: Int) = withContext(Dispatchers.Default) {
-        val factorialOne = viewModelScope.async { factorialCalc(number1) }.await()
-        val factorialTwo = viewModelScope.async { factorialCalc(number2) }.await()
+    private suspend fun calculateFactorialsSum(number1: Int, number2: Int) = withContext(Dispatchers.Default) {
+        val factorialOne = viewModelScope.async { calculateFactorial(number1) }.await()
+        val factorialTwo = viewModelScope.async { calculateFactorial(number2) }.await()
         isCalculationFinished = true
         return@withContext factorialOne + factorialTwo
     }

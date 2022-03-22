@@ -30,15 +30,15 @@ class MainActivity : AppCompatActivity() {
                 && !validator.isNumberValid(inputNumberTwo)){
                 Toast.makeText(this, "One of inputs is invalid", Toast.LENGTH_LONG).show()
             } else {
-                calculationHandler(inputNumberOne,inputNumberTwo)
+                invokeCalculations(inputNumberOne,inputNumberTwo)
                 progressBar.visibility = View.VISIBLE
                 textView.visibility = View.INVISIBLE
                 initViewModel()
             }
         }
     }
-    private fun calculationHandler(inputNumberOne: Int, inputNumberTwo: Int) {
-        viewModel.calculationHandler(inputNumberOne, inputNumberTwo)
+    private fun invokeCalculations(inputNumberOne: Int, inputNumberTwo: Int) {
+        viewModel.startFactorialCalculation(inputNumberOne, inputNumberTwo)
     }
 
     private fun initViewModel(){
