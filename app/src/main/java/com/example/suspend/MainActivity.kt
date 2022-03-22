@@ -26,9 +26,11 @@ class MainActivity : AppCompatActivity() {
         }
         initViewModel()
     }
+
     private fun invokeCalculations(inputNumberOne: Int, inputNumberTwo: Int) {
         viewModel.startFactorialCalculation(inputNumberOne, inputNumberTwo)
     }
+
     private fun onCalculateButtonClicked() {
         val inputNumberOne = (editTextNumber.text.toString()).toInt()
         val inputNumberTwo = (editTextNumber2.text.toString()).toInt()
