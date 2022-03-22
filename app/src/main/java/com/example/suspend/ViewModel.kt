@@ -8,7 +8,7 @@ import java.math.BigInteger
 
 open class MyViewModel: ViewModel() {
     private var isCalculationFinished = false
-    val inputData: MutableLiveData<BigInteger> by lazy{
+    val resultData: MutableLiveData<BigInteger> by lazy{
         MutableLiveData<BigInteger>()
     }
 
@@ -23,7 +23,7 @@ open class MyViewModel: ViewModel() {
     fun startFactorialCalculation(number1: Int, number2: Int){
         viewModelScope.launch {
             delay(1000)
-            inputData.value = calculateFactorialsSum(number1, number2)
+            resultData.value = calculateFactorialsSum(number1, number2)
         }
     }
 
