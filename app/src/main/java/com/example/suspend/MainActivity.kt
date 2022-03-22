@@ -15,12 +15,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MyViewModel::class.java]
-        calculateInput()
+        onButtonClicked()
     }
 
 
 
-    private fun calculateInput() {
+    private fun onButtonClicked() {
         button.setOnClickListener{
             val inputNumberOne = (editTextNumber.text.toString()).toInt()
             val inputNumberTwo = (editTextNumber2.text.toString()).toInt()
@@ -33,19 +33,19 @@ class MainActivity : AppCompatActivity() {
                 calculationHandler(inputNumberOne,inputNumberTwo)
                 progressBar.visibility = View.VISIBLE
                 textView.visibility = View.INVISIBLE
+                initViewModel()
             }
         }
     }
     private fun calculationHandler(inputNumberOne: Int, inputNumberTwo: Int) {
-        textView.text = ""
-        viewModel.calculationHandler(inputNumberOne, inputNumberTwo).let {
-            viewModel.inputData.observe(this){
-                textView.text = it.toString()
-                progressBar.visibility = View.INVISIBLE
-                textView.visibility = View.VISIBLE
-            }
-        }
-        textView.text = viewModel.inputData.toString()
+        viewModel.calculationHandler(inputNumberOne, inputNumberTwo)
     }
 
+    private fun initViewModel(){
+        viewModel.inputData.observe(this){
+            textView.text = it.toString()
+            progressBar.visibility = View.INVISIBLE
+            textView.visibility = View.VISIBLE
+        }
+    }
 }
